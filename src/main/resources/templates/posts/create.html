@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <title>creating</title>
+
+</head>
+<body>
+<form method="Post" action="/posts/create" th:object="${posts}">
+    <h2>Create new post here!</h2>
+    <br/>
+   Title: <input type="text" th:object="${title}" name="title"/>
+    <br/>
+    <br/>
+    Description: <input type="text" th:object="${description}" name="description"/>
+    <br/><br/>
+    <button type="submit">Submit</button>
+</form>
+<br/>
+<footer>Michael </footer>
+</body>
+</html>

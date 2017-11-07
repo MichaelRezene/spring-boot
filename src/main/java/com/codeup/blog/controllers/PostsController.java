@@ -1,50 +1,61 @@
 package com.codeup.blog.controllers;
 
-
+import com.codeup.blog.models.Post;
+import com.codeup.blog.services.PostSvc;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
+
 import java.util.ArrayList;
-import com.codeup.blog.model.Post;
 
 @Controller
 public class PostsController {
+    private final PostSvc service;
+
+    // Constructor injection
+    public PostsController(PostSvc service) {
+        this.service = service;
+    }
 
     @GetMapping("/posts")
-    public String showAll(Model vModel){
-
-        ArrayList<Post> posts = new ArrayList<>();
-
-        posts.add(new Post("Example 1", "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci atque commodi eligendi necessitatibus voluptates. At distinctio dolores minus molestiae mollitia nemo sapiente ut veniam voluptates! Corporis distinctio error quaerat vel!"));
-
-        posts.add(new Post("Example 2", "QWE Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci atque commodi eligendi necessitatibus voluptates. At distinctio dolores minus molestiae mollitia nemo sapiente ut veniam voluptates! Corporis distinctio error quaerat vel!"));
-
-        posts.add(new Post("Example 3", "ASD Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci atque commodi eligendi necessitatibus voluptates. At distinctio dolores minus molestiae mollitia nemo sapiente ut veniam voluptates! Corporis distinctio error quaerat vel!"));
-
-        vModel.addAttribute("posts", posts);
-
+    public String showAll(Model vModel) {
+        vModel.addAttribute("posts", service.findAll());
         return "posts/index";
     }
 
+    // auto-boxing
+    //int -> Integer
+    // long -> Long
+
+    // Extra step needed in this case
+    // Boxing is not automatic
+    // int -> long -> Long X
+    // This is fine because it doesn't interact with objects, they're both primitive types
+    // int -> long
+
     @GetMapping("/posts/{id}")
     public String showPost(@PathVariable int id, Model vModel){
-
-        Post post = new Post("Example 1", "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci atque commodi eligendi necessitatibus voluptates. At distinctio dolores minus molestiae mollitia nemo sapiente ut veniam voluptates! Corporis distinctio error quaerat vel!");
-
-        vModel.addAttribute("post", post);
+        vModel.addAttribute("post", service.findById(id));
         return "posts/show";
     }
 
     @GetMapping("/posts/create")
     public String showCreateForm(){
-        return "view the form for creating a post";
+        return "posts/create";
     }
 
     @PostMapping("/posts/create")
-    public String createPost(){
-        return "create a new post";
+    public String createPost(@ModelAttribute Post posts){
+        service.save(posts);
+        return "redirect:/posts";
+    }
+
+    @GetMapping("/posts/{id}/edit")
+    public String veiwFormEdit(@PathVariable int id, Model vModel){
+        Post existingPost = service.findById(id);
+        vModel.addAttribute("post", existingPost);
+
+        return "posts/edit";
     }
 
 }

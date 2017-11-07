@@ -17,9 +17,6 @@ public class Post {
     @Column(columnDefinition = "TEXT", nullable = false)
     private String body;
 
-
-
-
     public Post(){
 
     }

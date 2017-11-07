@@ -37,7 +37,6 @@ public class PostsController {
     public String showCreateForm(){
         return "view the form for creating a post";
     }
-
     @PostMapping("/posts/create")
     public String createPost(){
         return "create a new post";

@@ -11,8 +11,6 @@ import java.util.ArrayList;
 @Controller
 public class PostsController {
     private final PostSvc service;
-   // private long id;
-
 
     // Constructor injection
     public PostsController(PostSvc service) {
@@ -25,6 +23,16 @@ public class PostsController {
         return "posts/index";
     }
 
+    // auto-boxing
+    //int -> Integer
+    // long -> Long
+
+    // Extra step needed in this case
+    // Boxing is not automatic
+    // int -> long -> Long X
+    // This is fine because it doesn't interact with objects, they're both primitive types
+    // int -> long
+
     @GetMapping("/posts/{id}")
     public String showPost(@PathVariable int id, Model vModel){
         vModel.addAttribute("post", service.findById(id));
@@ -32,8 +40,7 @@ public class PostsController {
     }
 
     @GetMapping("/posts/create")
-    public String showCreateForm(Model vModel){
-        vModel.addAttribute("post", new Post());
+    public String showCreateForm(){
         return "posts/create";
     }
 
@@ -52,4 +59,3 @@ public class PostsController {
     }
 
 }
-

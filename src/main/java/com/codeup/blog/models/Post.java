@@ -11,11 +11,15 @@ public class Post {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(nullable = false, length = 150)
+    @Column(nullable = false)
     private String title;
 
-    @Column(nullable = false)
+    @Column(columnDefinition = "TEXT", nullable = false)
     private String body;
+
+    public Post() {
+
+    }
 
     // Use on the CREATE action
     public Post(String title, String body) {

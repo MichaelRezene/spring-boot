@@ -1,6 +1,7 @@
 package com.codeup.blog.controllers;
 
 import com.codeup.blog.models.Post;
+import com.codeup.blog.repository.PostRepository;
 import com.codeup.blog.services.PostSvc;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,7 +17,7 @@ public class PostsController {
     private final PostSvc service;
 
     // Constructor injection
-    public PostsController(PostSvc service) {
+    public PostsController(PostSvc service, PostRepository postDao) {
         this.service = service;
     }
 
@@ -25,16 +26,6 @@ public class PostsController {
         vModel.addAttribute("posts", service.findAll());
         return "posts/index";
     }
-
-    // auto-boxing
-    //int -> Integer
-    // long -> Long
-
-    // Extra step needed in this case
-    // Boxing is not automatic
-    // int -> long -> Long X
-    // This is fine because it doesn't interact with objects, they're both primitive types
-    // int -> long
 
     @GetMapping("/posts/{id}")
     public String showPost(@PathVariable int id, Model vModel){

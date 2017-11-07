@@ -1,8 +1,20 @@
 package com.codeup.blog.models;
 
+
+import javax.persistence.*;
+
+@Entity
+@Table(name = "posts")
 public class Post {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
+    @Column(nullable = false, length = 150)
     private String title;
+
+    @Column(nullable = false)
     private String body;
 
     // Use on the CREATE action

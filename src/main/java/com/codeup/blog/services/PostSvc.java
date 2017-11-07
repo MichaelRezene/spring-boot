@@ -17,14 +17,15 @@ public class PostSvc {
         createDummyPosts();
     }
 
-    public Post findById(long id) {
+    public Post findById(long id)
+    {
         return posts.get((int) id - 1);
     }
 
     public List<Post> findAll() {
+
         return posts;
     }
-
     private void createDummyPosts() {
         save(new Post("Title 1", "Body 1"));
         save(new Post("Title 2", "Body 2"));

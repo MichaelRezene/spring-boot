@@ -23,7 +23,7 @@ public class PostsController {
         return "posts/index";
     }
 
-    // auto-boxing
+
     //int -> Integer
     // long -> Long
 

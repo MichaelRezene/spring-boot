@@ -17,6 +17,10 @@ public class Post {
     @Column(columnDefinition = "TEXT", nullable = false)
     private String body;
 
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
     public Post(){
 
     }
@@ -57,5 +61,10 @@ public class Post {
     public void setBody(String body) {
 
         this.body = body;
+    }
+
+    public void setUser(User user) {
+
+        this.user = user;
     }
 }

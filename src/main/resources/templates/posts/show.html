@@ -5,12 +5,19 @@
 <nav th:include="fragments/navbar :: mainNavbar"></nav>
 
 <!-- Content of the page -->
-
-<div>
     <h1 th:text="${post.title}"></h1>
     <p th:text="${post.body}"></p>
-</div>
+Created by: <a th:href="@{'mailto:' + ${post.user.email} }"><span th:text="${post.user.username}"></span></a>
 
+<!-- Buttons for editing + deleting -->
+<div class="row">
+    <div>
+        <a th:href="${'/posts/' + post.id + '/edit'}">Edit here</a>
+    </div>
+    <form method="POST" th:action="${'/posts/' + post.id + '/delete'}">
+        <input type="submit" value="Delete This Post" />
+    </form>
+</div>
 <footer th:include="fragments/footer :: footer"></footer>
 </body>
 </html>

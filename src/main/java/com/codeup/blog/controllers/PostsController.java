@@ -1,53 +1,76 @@
 package com.codeup.blog.controllers;
 
 import com.codeup.blog.models.Post;
+
+import com.codeup.blog.models.User;
 import com.codeup.blog.repository.PostRepository;
+import com.codeup.blog.repository.UsersRepository;
 import com.codeup.blog.services.PostSvc;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-
+import java.util.List;
 @Controller
 public class PostsController {
     private final PostSvc service;
+    private final UsersRepository usersDao;
 
     // Constructor injection
-    public PostsController(PostSvc service, PostRepository postDao) {
+    @Autowired
+    public PostsController(PostSvc service, UsersRepository usersDao) {
         this.service = service;
+        this.usersDao = usersDao;
     }
 
     @GetMapping("/posts")
     public String showAll(Model vModel) {
+//        List<Post> = service.findAll();
         vModel.addAttribute("posts", service.findAll());
         return "posts/index";
-    
-
+    }
 
     @GetMapping("/posts/{id}")
-    public String showPost(@PathVariable int id, Model vModel){
+    public String showPost(@PathVariable int id, Model vModel) {
         vModel.addAttribute("post", service.findById(id));
         return "posts/show";
     }
 
     @GetMapping("/posts/create")
-    public String showCreateForm(){
+    public String showCreateForm(Model vModel) {
+        vModel.addAttribute("post", new Post());
         return "posts/create";
     }
 
     @PostMapping("/posts/create")
-    public String createPost(@ModelAttribute Post posts){
-        service.save(posts);
+    public String createPost(@ModelAttribute Post post) {
+        User user = usersDao.findOne(2L);
+        post.setUser(user);
+        service.save(post);
         return "redirect:/posts";
     }
 
     @GetMapping("/posts/{id}/edit")
-    public String veiwFormEdit(@PathVariable int id, Model vModel){
+    public String createEditForm(Model vModel, @PathVariable long id) {
         Post existingPost = service.findById(id);
         vModel.addAttribute("post", existingPost);
-
         return "posts/edit";
     }
 
+    @PostMapping("/posts/{id}/delete")
+    public String deleteFromExistence(@PathVariable long id) {
+        service.delete(id);
+        return "redirect:/posts";
+    }
+
+    @PostMapping("/posts/{id}/edit")
+    public String updatePost(@PathVariable long id, @ModelAttribute Post post) {
+        Post existingPost = service.findById(id);
+
+        existingPost.setTitle(existingPost.getTitle());
+        existingPost.setBody(existingPost.getBody());
+        service.save(post);
+        return "redirect:/posts/" + post.getId();
+    }
 }

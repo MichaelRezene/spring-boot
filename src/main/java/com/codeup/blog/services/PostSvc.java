@@ -1,19 +1,19 @@
 
 package com.codeup.blog.services;
 
-//import com.codeup.blog.models.Post;
 import com.codeup.blog.models.Post;
 import com.codeup.blog.repository.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Service
 public class PostSvc {
    // private List<Post> posts;
-    private PostRepository postDao;
+    private final PostRepository postDao;
 
     @Autowired
     public PostSvc(PostRepository postDao) {
@@ -31,14 +31,13 @@ public class PostSvc {
         return postDao.findAll();
     }
 
+    public Post save(Post post) {
 
-    public Post save(Post posts) {
-
-        return postDao.save(posts);
+        return postDao.save(post);
     }
     public void delete(Long id){
         postDao.delete(id);
 
-
     }
+
 }

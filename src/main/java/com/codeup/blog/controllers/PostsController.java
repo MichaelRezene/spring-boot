@@ -20,8 +20,8 @@ public class PostsController {
 
 
     // Constructor injection
-//    @Autowired
-    public PostsController(PostSvc service, PostRepository postDao) {
+   @Autowired
+    public PostsController(PostSvc service) {
         this.service = service;
 //        this.postDao = postDao;
     }
@@ -40,7 +40,8 @@ public class PostsController {
     }
 
     @GetMapping("/posts/create")
-    public String showCreateForm(){
+    public String showCreateForm(Model vModel){
+        vModel.addAttribute("post", new Post());
         return "posts/create";
     }
 

@@ -5,15 +5,15 @@
 
 <body>
 <nav th:replace="fragments/navbar :: mainNavbar"></nav>
-
  <h2>Edit the post</h2>
+
 
 <form class="text-center" th:method="POST" th:action="${'/posts/' + post.id + '/edit'}" th:object="${post}">
         Title
-    <input  type="text" th:field="*{title}" /> <br/><br/>
-    Body
-        <input  type="text" th:field="*{body}" /> <br/><br/>
-        <input  type="submit" />
+        <input type="text" th:field="*{title}" /> <br/><br/>
+        Body
+        <input type="text" th:field="*{body}" /> <br/><br/>
+        <input type="submit" />
     </form>
 <footer class="text-center" th:include="fragments/footer :: footer"></footer>
 </body>

@@ -6,18 +6,19 @@
 
 </head>
 <body>
-<form method="Post" action="/posts/create" th:object="${post}">
+<form class="text-center" method="Post" action="/posts/create" th:object="${post}">
     <h2>Create new post here!</h2>
     <br/>
-   Title: <input type="text" th:field="*{title}" name="title"/>
+        Title: <input type="text" th:field="*{title}" name="title"/>
     <br/>
     <br/>
     Body: <input type="text" th:field="*{body}" name="body"/>
     <br/><br/>
     <button type="submit">Submit</button>
+
 </form>
 <br/>
-<footer>Michael </footer>
+<footer class="text-center">Michael </footer>
 </body>
 </html>
 

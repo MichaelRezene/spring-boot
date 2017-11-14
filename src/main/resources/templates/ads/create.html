@@ -1,0 +1,20 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:include="fragments/head :: main-header('Create an ad')">
+</head>
+<body>
+<nav th:replace="fragments/navbar :: mainNavbar" />
+
+<form th:action="@{/ads/create}" method="post" th:object="${ad}">
+    Title:
+    <input th:field="*{title}" />
+    <br />
+    Description:
+    <input th:field="*{description}" />
+    <br />
+    <input type="submit" />
+</form>
+
+<footer th:include="fragments/footer :: footer"></footer>
+</body>
+</html>

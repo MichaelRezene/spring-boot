@@ -2,24 +2,28 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head th:replace="fragments/head :: main-header('View post')"></head>
 <body>
-<nav th:include="fragments/navbar :: mainNavbar"></nav>
+<nav th:replace="fragments/navbar :: mainNavbar"></nav>
 
 <!-- Content of the page -->
-    <h1 class="text-center" th:text="${post.title}"></h1>
-    <p  class="text-center" th:text="${post.body}"></p>
-<!--Created by: <a th:href="@{'mailto:' + ${post.user.email} }"><span th:text="${post.user.username}"></span></a>-->
 
-<!-- Buttons for editing + deleting -->
-<div class="row">
-    <div>
+<div class="container">
+    <h1 th:text="${post.title}"></h1>
+    <p th:text="${post.body}"></p>
+    <!--Created by: <a th:href="@{'mailto:' + ${post.user.email} }"><span th:text="${post.user.username}"></span></a>-->
 
-        <a th:href="${'/posts/' + post.id + '/edit'}">Edit here</a>
+    <!-- Buttons for editing + deleting -->
+    <div class="row">
+        <div class="col-md-6">
+            <a th:href="${'/posts/' + post.id + '/edit'}" class="btn btn-block btn-warning">Edit here</a><br/>
+        </div>
+        <form method="post" th:action="${'/posts/' + post.id + '/delete'}" class="col-md-6">
+            <input class="btn btn-block btn-danger" type="submit" value="Delete here" />
+        </form>
     </div>
-    <form class="text-center" method="POST" th:action="${'/posts/' + post.id + '/delete'}">
-        <input class="text-center" type="submit" value="Delete This Post" />
-    </form>
+
 </div>
-<footer class="text-center" th:include="fragments/footer :: footer"></footer>
+
+<footer th:include="fragments/footer :: footer"></footer>
 </body>
 </html>
 

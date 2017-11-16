@@ -6,8 +6,6 @@
 <nav th:replace="fragments/navbar :: mainNavbar"></nav>
 
 <h1>Here's all the posts!</h1>
-
-<!-- Content of the page -->
 <div class="container">
     <div class="row">
         <div class="col-md-6" th:each="post : ${posts}">

@@ -30,7 +30,6 @@ public class UserController {
     public String registerUser(@ModelAttribute User user) {
         // TODO: Validate the input
         // TODO: double check that the username is not already in use
-
         String hash = encoder.encode(user.getPassword());
         user.setPassword(hash);
         repository.save(user);

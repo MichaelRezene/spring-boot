@@ -6,22 +6,19 @@
 <nav th:replace="fragments/navbar :: mainNavbar"></nav>
 <div class="container">
     <div class="row">
-        <h1>Log In</h1>
+        <h1><em>Log In</em></h1>
         <div th:if="${param.error}">
             Invalid Username and Password.
         </div>
         <div th:if="${param.logout}">
             You have been logged out.
         </div>
-
         <form th:action="@{/login}" method="post">
             <div class="form-group">
-                <label for="username">Username</label>
-                <input id="username" name="username" type="text" class="form-control"/>
+              username: <input id="username" name="username" type="text"/>
             </div>
             <div class="form-group">
-                <label for="password">Password</label>
-                <input id="password" name="password" type="password" class="form-control"/>
+                password: <input id="password" name="password" type="password"/>
             </div>
             <input type="submit" value="Log In" class="btn btn-primary"/>
         </form>

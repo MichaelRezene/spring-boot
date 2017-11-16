@@ -1,22 +1,23 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
-<head>
-    <meta charset="UTF-8"/>
-    <title>creating</title>
-
-</head>
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head :: main-header('View post')"></head>
 <body>
-<form method="Post" action="/posts/create" th:object="${post}">
-    <h2>Create new post here!</h2>
-    <br/>
-   Title: <input type="text" th:field="*{title}" name="title"/>
-    <br/>
-    <br/>
-    Body: <input type="text" th:field="*{body}" name="body"/>
-    <br/><br/>
-    <button type="submit">Submit</button>
-</form>
-<br/>
-<footer>Michael </footer>
+<nav th:replace="fragments/navbar :: mainNavbar"></nav>
+<div class="row">
+    <div class="col-md-8 col-md-offset-2">
+        <h1>Create A Post</h1>
+        <form
+                th:include="posts/form :: form"
+                th:method="post"
+                th:action="@{/posts/create}"
+                th:object="${post}">
+        </form>
+    </div>
+</div>
+<footer th:include="fragments/footer :: scripts"></footer>
 </body>
 </html>
+
+
+
+

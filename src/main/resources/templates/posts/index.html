@@ -1,19 +1,30 @@
+
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head th:replace="fragments/head :: main-header('All posts')"></head>
 <body>
-<nav th:include="fragments/navbar :: mainNavbar"></nav>
+<nav th:replace="fragments/navbar :: mainNavbar"></nav>
+
+<h1><em>Here's all the posts!</em></h1>
 
 <!-- Content of the page -->
-<div th:each="post : ${posts}">
-    <h1>
-        <!--<a th:href="${'/posts/' + post.id}" th:text="${post.title}"></a>-->
-        <a th:href="@{/posts/{id}(id=${post.id})}" th:text="${post.title}"></a>
-        <a th:href="@{/posts/{id}/edit(id=${post.id})}" th:text="${'Edit' + ''}"></a>
-    </h1>
-    <p th:text="${post.body}"></p>
+<div class="container">
+    <div class="row">
+        <div class="col-md-6" th:each="post : ${posts}">
+            <h2><a th:href="@{/posts/{id}(id=${post.id})}" th:text="${post.title}"></a></h2>
+            <form method="post" th:action="${'/posts/' + post.id + '/delete'}" class="col-md-6">
+                <p th:text="${post.body}"></p>
+                <a class="btn btn-warning" th:href="@{/posts/{id}/edit(id=${post.id})}">Edit</a>
+                <a><input class="btn btn-danger" type="submit" value="Delete"/></a>
+            </form>
+        </div>
+    </div>
 </div>
 
-<footer th:include="fragments/footer :: footer"></footer>
+
+<footer th:include="fragments/footer :: scripts"></footer>
 </body>
 </html>
+
+
+

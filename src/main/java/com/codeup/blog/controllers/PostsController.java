@@ -1,35 +1,35 @@
 package com.codeup.blog.controllers;
 
 import com.codeup.blog.models.Post;
-
 import com.codeup.blog.models.User;
-import com.codeup.blog.repository.PostRepository;
-import com.codeup.blog.repository.UsersRepository;
+//import com.codeup.blog.repositories.UsersRepository;
 import com.codeup.blog.services.PostSvc;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+
 @Controller
 public class PostsController {
     private final PostSvc service;
-    private final UsersRepository usersDao;
+   // private final UsersRepository usersDao;
 
-    // Constructor injection
     @Autowired
-    public PostsController(PostSvc service, UsersRepository usersDao) {
+    // Constructor injection
+    public PostsController(PostSvc service /*UsersRepository usersDao*/) {
+
         this.service = service;
-        this.usersDao = usersDao;
+      //  this.usersDao = usersDao;
     }
 
-    @GetMapping("/posts")
+    @GetMapping({"/posts", "/"})
     public String showAll(Model vModel) {
-//        List<Post> = service.findAll();
         vModel.addAttribute("posts", service.findAll());
         return "posts/index";
     }
+
 
     @GetMapping("/posts/{id}")
     public String showPost(@PathVariable int id, Model vModel) {
@@ -45,32 +45,28 @@ public class PostsController {
 
     @PostMapping("/posts/create")
     public String createPost(@ModelAttribute Post post) {
-        User user = usersDao.findOne(2L);
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         post.setUser(user);
         service.save(post);
         return "redirect:/posts";
     }
 
     @GetMapping("/posts/{id}/edit")
-    public String createEditForm(Model vModel, @PathVariable long id) {
+    public String showEditForm(Model vModel, @PathVariable long id) {
         Post existingPost = service.findById(id);
         vModel.addAttribute("post", existingPost);
         return "posts/edit";
     }
 
-    @PostMapping("/posts/{id}/delete")
-    public String deleteFromExistence(@PathVariable long id) {
-        service.delete(id);
-        return "redirect:/posts";
-    }
-
     @PostMapping("/posts/{id}/edit")
     public String updatePost(@PathVariable long id, @ModelAttribute Post post) {
-        Post existingPost = service.findById(id);
-
-        existingPost.setTitle(existingPost.getTitle());
-        existingPost.setBody(existingPost.getBody());
+        post.setId(id);
         service.save(post);
-        return "redirect:/posts/" + post.getId();
+        return "redirect:/posts";
+    }
+    @PostMapping("/posts/{id}/delete")
+    public String deletePost(@PathVariable long id) {
+        service.delete(id);
+        return "redirect:/posts";
     }
 }

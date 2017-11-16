@@ -1,6 +1,8 @@
 package com.codeup.blog.models;
 
 
+import org.hibernate.validator.constraints.NotBlank;
+
 import javax.persistence.*;
 
 @Entity
@@ -12,15 +14,18 @@ public class Post {
     private long id;
 
     @Column(nullable = false)
+    @NotBlank(message = "Posts must have a title")
     private String title;
 
     @Column(columnDefinition = "TEXT", nullable = false)
+    @NotBlank(message = "Posts must have a title")
     private String body;
 
 
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+
     public Post(){
 
     }
@@ -66,5 +71,9 @@ public class Post {
     public void setUser(User user) {
 
         this.user = user;
+    }
+
+    public User getUser() {
+        return user;
     }
 }
